@@ -16,8 +16,13 @@ class JuegoFactory extends Factory
      */
     public function definition(): array
     {
+        $plataformas = ['PC', 'SWITCH', 'PS5', 'XBOX'];
+
         return [
-            //
+            'nombre' => 'Juego ' . $this->faker->text($maxNbChars = 10),
+            'plataforma' => $plataformas[rand(0, 3)],
+            'edadR' => $this->faker->numberBetween(5, 18),
+            'nota' => $this->faker->numberBetween(1, 10)
         ];
     }
 }

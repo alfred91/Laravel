@@ -17,11 +17,11 @@ class TorneoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => 'Torneo '. $this->faker->text(10),
+            'nombre' => 'Torneo ' . $this->faker->text(10),
             'juego' => $this->faker->text(100),
-            'fechaIncio' => $this->faker->dateTimeBetween($startDate = '+1 wee', $endDate = '+4 week'),
-            'premio' => $this->faker->randomNumber(5,true),
-            'premio2' => $this->faker->randomNumber(4,true),
+            'fechaInicio' => $this->faker->dateTimeBetween($startDate = '+1 wee', $endDate = '+4 week'),
+            'premio' => $this->faker->randomNumber(5, true),
+            'premio2' => $this->faker->randomNumber(4, true),
             'maxParticipantes' => $this->faker->numberBetween(10, 50),
         ];
     }

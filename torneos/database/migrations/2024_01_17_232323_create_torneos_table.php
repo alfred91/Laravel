@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('juego');
-            $table->date('fechaIncio');
+            $table->date('fechaInicio');
             $table->integer('premio');
             $table->integer('premio2');
             $table->integer('maxParticipantes');
