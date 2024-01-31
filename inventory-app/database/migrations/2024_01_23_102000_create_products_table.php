@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('model');
             $table->string('manufacturer');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->integer('stock');
             $table->enum('status', ['active', 'broken', 'missing']);
-            $table->foreignId('location_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('location_id')->constrained();
             $table->timestamps();
         });
     }

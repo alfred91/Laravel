@@ -36,11 +36,18 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'stock' => 'required|numeric',
-
+            'manufacturer' => 'required',
+            'description' => 'required',
+            'status' => 'required',
+            'image' => 'sometimes|file|image|max:5000',
         ]);
+
+        // Create a new Product using the request data
         Product::create($request->all());
+
         return redirect()->route('products.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -54,12 +61,14 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product) // Laravel inyecta automáticamente el producto basado en el ID de la ruta
     {
         $categories = Category::all();
         $locations = Location::all();
+
         return view('products.edit', compact('product', 'categories', 'locations'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -67,13 +76,28 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required',
+            'code' => 'required',
+            'model' => 'required',
+            'manufacturer' => 'required',
+            'description' => 'required',
             'stock' => 'required|numeric',
-            // otros campos requeridos
+            'status' => 'required',
+            'image' => 'sometimes|file|image|max:5000',
         ]);
-        $product->update($request->all());
-        return redirect()->route('products.index');
+
+        $data = $request->all();
+
+        // Tratar la imagen, si se sube una nueva
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product->update($data);
+
+        return redirect()->route('products.index')->with('success', 'Producto actualizado correctamente');
     }
+
 
     /**
      * Remove the specified resource from storage.

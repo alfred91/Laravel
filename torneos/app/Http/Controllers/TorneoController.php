@@ -14,6 +14,7 @@ class TorneoController extends Controller
         $torneos = Torneo::whereDate('fechaInicio', '>', now()->toDateString())->paginate(5);
         return view('dashboard', ['torneos' => $torneos]);
     }
+    //CREAMOS INDEX WEB PARA OTRA VISTA*
 
     public function create()
     {

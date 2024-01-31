@@ -9,6 +9,10 @@ class Location extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'city', 'building_name', 'building_address', 'room_number'
+    ];
+
     public function products()
     {
         return $this->hasMany(Product::class);

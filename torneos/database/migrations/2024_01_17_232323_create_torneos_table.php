@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('juego');
             $table->date('fechaInicio');
-            $table->integer('premio');
+            $table->integer('premio1');
             $table->integer('premio2');
             $table->integer('maxParticipantes');
+            $table->unsignedBigInteger('juego_id');
+            $table->foreign('juego_id')->references('id')->on('juegos');
             $table->timestamps();
         });
     }

@@ -47,4 +47,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mdrol:admin'])->group(f
 });
 
 
+// RUTAS WEB
+
+
 require __DIR__ . '/auth.php';

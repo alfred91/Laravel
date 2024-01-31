@@ -16,6 +16,13 @@ class JuegoController extends Controller
         return view('juegos', ['juegos' => $juegos]);
     }
 
+    public function index_web()
+    {
+        $juegos = Juego::paginate(5);
+        return view('web.juegos', ['juegos' => $juegos]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
