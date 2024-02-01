@@ -20,7 +20,7 @@ use App\Http\Controllers\JuegoController;
 
 //RUTAS WEB
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('web.torneos');
 });
 
 
@@ -29,16 +29,12 @@ Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 
 //RUTAS ADMIN
 Route::prefix('admin')->middleware(['auth', 'verified', 'mdrol:admin'])->group(function () {
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [TorneoController::class, 'index'])->name('dashboard');
     Route::get('/usuarios', [ProfileController::class, 'index'])->name('usuarios');
-    Route::get('/usuarios/create', [ProfileController::class, 'create'])->name('usuarios.create');
-    Route::get('/juegos/create', [JuegoController::class, 'create'])->name('juegos.create');
-
     Route::get('/torneos/create', [TorneoController::class, 'create'])->name('torneos.create');
     Route::post('/torneos/store', [TorneoController::class, 'store'])->name('torneos.store');
     Route::get('/torneos/{id}', [TorneoController::class, 'show'])->name('torneos');
@@ -46,8 +42,14 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'mdrol:admin'])->group(f
     Route::resource('/juegos', JuegoController::class);
 });
 
-
-// RUTAS WEB
-
+//RUTAS WEB
+Route::prefix('gameplace')->group(function () {
+    Route::get('/torneos', [TorneoController::class, 'index_web'])->name('web.torneos');
+    Route::get('/torneos/{id}', [TorneoController::class, 'show'])->name('web.torneos_detalle');
+    Route::get('/juegos', [JuegoController::class, 'index_web'])->name('web.juegos');
+    Route::get('/juegos/{juego}', [JuegoController::class, 'show_web'])->name('web.juegos_detalle');
+    Route::get('/inscripciones', [ProfileController::class, 'inscripciones'])->name('web.inscripciones');
+    Route::get('/inscribirse/{torneoId}', [TorneoController::class, 'inscribirse'])->name('web.inscribirse');
+});
 
 require __DIR__ . '/auth.php';

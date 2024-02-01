@@ -65,4 +65,13 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    /**
+     * Ver inscripciones del usuario logueado
+     */
+    public function inscripciones()
+    {
+        $user = Auth::user();
+        $torneosInscrito = $user->inscripciones;
+        return view('web.inscripciones', ['torneos' => $torneosInscrito]);
+    }
 }

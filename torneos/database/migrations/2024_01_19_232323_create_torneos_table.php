@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('torneos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('juego');
+            //$table->string('juego');
             $table->date('fechaInicio');
             $table->integer('premio1');
             $table->integer('premio2');

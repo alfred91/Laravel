@@ -19,14 +19,14 @@
         </x-slot>
 
         @foreach ($torneos as $torneo)
-            <tr>
-                <x-table.td>{{ $torneo->nombre }}</x-table.td>
-                <x-table.td>{{ $torneo->juego }}</x-table.td>
-                <x-table.td>{{ $torneo->fechaInicio }}</x-table.td>
-                <x-table.td>{{ $torneo->premio1 }}</x-table.td>
-                <x-table.td>{{ $torneo->premio2 }}</x-table.td>
-                <x-table.td>{{ $torneo->maxParticipantes }}</x-table.td>
-            </tr>
+        <tr>
+            <x-table.td>{{ $torneo->nombre }}</x-table.td>
+            <x-table.td>{{ $torneo->juego->nombre }}</x-table.td>
+            <x-table.td>{{ $torneo->fechaInicio }}</x-table.td>
+            <x-table.td>{{ $torneo->premio1 }}</x-table.td>
+            <x-table.td>{{ $torneo->premio2 }}</x-table.td>
+            <x-table.td>{{ $torneo->maxParticipantes }}</x-table.td>
+        </tr>
         @endforeach
 
         <x-slot name="tlinks">

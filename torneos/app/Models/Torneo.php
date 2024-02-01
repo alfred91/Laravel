@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Juego;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Torneo extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'nombre',
         'fechaIncio',
@@ -21,4 +20,12 @@ class Torneo extends Model
         'premio2',
         'maxParticipantes'
     ];
+    public function juego(): BelongsTo
+    {
+        return $this->belongsTo(Juego::class);  //Uno a muchos (inversa)
+    }
+    public function inscritos(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->withPivot('nivel');
+    }
 }

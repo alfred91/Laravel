@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +11,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Llama a los seeders específicos en el orden que desees ejecutarlos
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            JuegoSeeder::class,
+            TorneoSeeder::class,
+            TorneoUserSeeder::class,
+        ]);
+
+        // También puedes llamar a cada seeder individualmente si prefieres
+        // $this->call(UserSeeder::class);
+        // $this->call(JuegoSeeder::class);
+        // $this->call(TorneoSeeder::class);
+        // $this->call(TorneoUserSeeder::class);
     }
 }
