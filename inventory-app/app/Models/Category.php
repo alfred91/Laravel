@@ -9,7 +9,6 @@ class Category extends Model
 {
     use HasFactory;
 
-    // Si necesitas especificar los campos asignables
     protected $fillable = ['name'];
 
     public function products()
