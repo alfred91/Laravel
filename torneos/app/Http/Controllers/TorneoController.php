@@ -8,18 +8,24 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+
 
 class TorneoController extends Controller
 {
     public function index(): View
     {
+        //App::setLocale('es');
         $torneos = Torneo::whereDate('fechaInicio', '>', now()->toDateString())->paginate(5);
         return view('dashboard', ['torneos' => $torneos]);
     }
 
     public function index_web(): View
     {
-        $torneos = Torneo::whereDate('fechaInicio', '>', now()->toDateString())->orderByDesc('fechaInicio')->paginate(10);
+        $torneos = Torneo::whereDate('fechaInicio', '>', now()->toDateString())->orderByDesc('fechaInicio')->paginate(20); //->get();
+        //Cache::put('torneos', $torneos);
+        //return view('web.torneos', ['torneos' => $torneos]);
+        //$torneos = Cache::get($torneos);
         return view('web.torneos', ['torneos' => $torneos]);
     }
     public function create()

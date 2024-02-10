@@ -37,7 +37,7 @@ class LocationController extends Controller
 
         ]);
         Location::create($request->all());
-        return redirect()->route('locations.index');
+        return redirect()->route('locations.index')->with('success', 'Localización creada con éxito.');
     }
 
     /**
@@ -78,6 +78,6 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         $location->delete();
-        return redirect()->route('locations.index');
+        return redirect()->route('locations.index')->with('success', 'Localización eliminada con éxito.');
     }
 }

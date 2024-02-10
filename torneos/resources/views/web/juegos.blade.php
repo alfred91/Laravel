@@ -17,12 +17,12 @@
         </x-slot>
 
         @foreach ($juegos as $juego)
-            <tr>
-                <x-table.td>{{ $juego->nombre }}</x-table.td>
-                <x-table.td>{{ $juego->plataforma }}</x-table.td>
-                <x-table.td>{{ $juego->edadR }}</x-table.td>
-                <x-table.td>{{ $juego->nota }}</x-table.td>
-            </tr>
+        <tr>
+            <x-table.td>{{ $juego->nombre }}</x-table.td>
+            <x-table.td>{{ $juego->plataforma }}</x-table.td>
+            <x-table.td>{{ $juego->edadR }}</x-table.td>
+            <x-table.td>{{ $juego->nota }}</x-table.td>
+        </tr>
         @endforeach
 
         <x-slot name="tlinks">

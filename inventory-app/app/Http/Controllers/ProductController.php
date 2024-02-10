@@ -34,20 +34,29 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'code' => 'required',
+            'model' => 'required',
             'stock' => 'required|numeric',
             'manufacturer' => 'required',
             'description' => 'required',
             'status' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'location_id' => 'required|exists:locations,id',
             'image' => 'sometimes|file|image|max:5000',
         ]);
 
-        // Create a new Product using the request data
-        Product::create($request->all());
+        $data = $request->all();
 
-        return redirect()->route('products.index');
+        // Si se sube una imagen, procesar y guardar la ruta de la imagen
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        Product::create($data);
+
+        return redirect()->route('products.index')->with('success', 'Producto creado con éxito');
     }
-
 
     /**
      * Display the specified resource.
@@ -82,6 +91,8 @@ class ProductController extends Controller
             'description' => 'required',
             'stock' => 'required|numeric',
             'status' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'location_id' => 'required|exists:locations,id',
             'image' => 'sometimes|file|image|max:5000',
         ]);
 
@@ -95,7 +106,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('products.index')->with('success', 'Producto actualizado correctamente');
+        return redirect()->route('products.index')->with('success', 'Producto actualizado con éxito');
     }
 
 
