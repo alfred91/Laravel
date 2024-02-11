@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class ReportController extends Controller
@@ -18,21 +17,20 @@ class ReportController extends Controller
                 });
             })
             ->when($request->nombre, function ($query) use ($request) {
-                return $query->where('model', 'like', '%' . $request->nombre . '%'); // Asumiendo que 'nombre' se refiere a 'model'
+                return $query->where('model', 'like', '%' . $request->nombre . '%');
             })
             ->when($request->codigo, function ($query) use ($request) {
                 return $query->where('code', 'like', '%' . $request->codigo . '%');
             })
             ->paginate(10);
 
-        return view('reports.inventory', compact('products')); // Ajusta la vista y la variable a 'products'
+        return view('reports.inventory', compact('products'));
     }
 
     public function reporteInventarioPdf()
     {
-        $products = Product::with('category', 'location')->get(); // Ajusta para usar 'products'
-
-        $pdf = PDF::loadView('reports.inventory', compact('products')); // Asegúrate de que la vista está correcta
+        $products = Product::with('category', 'location')->get();
+        $pdf = PDF::loadView('reports.inventory_pdf', compact('products'));
         return $pdf->download('reporte_inventario.pdf');
     }
 }

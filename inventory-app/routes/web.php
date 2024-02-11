@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Agrupamos las rutas que requieren autenticación y verificación de email
+// Rutas que requieren autenticación y verificación de email
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [ReportController::class, 'reporteInventario'])->name('dashboard');
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Inventario
     Route::get('/reports/inventory', [ReportController::class, 'reporteInventario'])->name('reports.inventory');
-    Route::get('/reporte-inventario/pdf', [ReportController::class, 'reporteInventarioPdf'])->name('reporte_inventario.pdf');
+    Route::get('/reports/inventory/pdf', [ReportController::class, 'reporteInventarioPdf'])->name('reports.inventory.pdf');
 });
 
 require __DIR__ . '/auth.php';

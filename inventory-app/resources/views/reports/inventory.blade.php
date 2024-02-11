@@ -7,7 +7,7 @@
             <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                 <div class="mt-8 text-2xl flex justify-between items-center">
                     <span><b>Reporte de Inventario</b></span>
-                    <a href="{{ route('reporte_inventario.pdf') }}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">Generar PDF</a>
+                    <a href="{{ route('reports.inventory.pdf') }}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">Generar PDF</a>
                 </div>
 
                 <div class="mt-4 mb-4">
@@ -71,9 +71,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if (!request()->has('pdf'))
                 <div class="mt-4">
                     {{ $products->links() }}
                 </div>
+                @endif
             </div>
         </div>
     </div>
