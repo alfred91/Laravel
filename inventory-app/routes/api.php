@@ -14,9 +14,9 @@ use App\Http\Controllers\Api\V1\InventoryReportApiController;
 Route::middleware('auth:sanctum')->group(function () {
     //Route::apiResource('v1/productos', ProductApiController::class);
     Route::apiResource('v1/categorias', CategoryApiController::class);
-    Route::apiResource('v1/locations', LocationApiController::class);
+    //Route::apiResource('v1/locations', LocationApiController::class);
     Route::get('v1/inventario', [InventoryReportApiController::class, 'index']);
-    Route::get('v1/inventario/codigo/{codigo}', [ProductApiController::class, 'showByCode']);
+    Route::get('v1/inventario/{codigo}', [ProductApiController::class, 'show']);
     Route::get('v1/inventario/categoria/{categoria}', [ProductApiController::class, 'byCategory']);
     Route::delete('v1/inventario/codigo/{codigo}', [ProductApiController::class, 'destroy']);
     Route::post('v1/inventario', [ProductApiController::class, 'store']);
@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Endpoint para obtener un token de autenticación
+// Endpoint para obtener TOKEN
 Route::post('/auth/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
@@ -38,9 +38,10 @@ Route::post('/auth/token', function (Request $request) {
 
     if (!$user || !Hash::check($request->password, $user->password)) {
         throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
+            'email' => ['Credenciales Incorrectas.'],
         ]);
     }
 
-    return $user->createToken('myapptoken')->plainTextToken;
+    $token = $user->createToken('myapptoken')->plainTextToken;
+    return response()->json(['token' => $token]);
 });

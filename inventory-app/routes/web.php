@@ -26,7 +26,7 @@ Route::get('/', function () {
 // Rutas que requieren autenticación y verificación de email
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard', [ReportController::class, 'reporteInventario'])->name('dashboard');
+    Route::get('/inventario', [ReportController::class, 'reporteInventario'])->name('inventario');
 
     // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

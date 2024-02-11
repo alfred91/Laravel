@@ -8,21 +8,37 @@ use Illuminate\Http\Request;
 
 class ProductApiController extends Controller
 {
-    // Mostrar todos los productos con paginación
+    // Mostrar todos los productos
     public function index()
     {
         $products = Product::with(['category', 'location'])->paginate();
         return response()->json($products);
     }
 
-    // Mostrar un producto por su código
-    public function show($id)
+    // Mostrar producto por código
+    public function show($code)
     {
-        $product = Product::with(['category', 'location'])->findOrFail($id);
-        return response()->json($product);
+        $product = Product::with(['category', 'location'])->where('code', $code)->first();
+
+        if (!$product) {
+            return response()->json(['message' => 'Producto no encontrado'], 404);
+        }
+
+        return response()->json($product, 201);
     }
 
-    // Crear un nuevo producto
+    // Mostrar por categoría
+
+    public function byCategory($category)
+    {
+        $products = Product::with(['category', 'location'])->whereHas('category', function ($query) use ($category) {
+            $query->where('name', $category);
+        })->paginate();
+
+        return response()->json($products);
+    }
+
+    // Crear producto
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -36,8 +52,7 @@ class ProductApiController extends Controller
         return response()->json($product, 201);
     }
 
-
-    // Actualizar un producto existente
+    // Actualizar producto
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -45,7 +60,7 @@ class ProductApiController extends Controller
         return response()->json($product);
     }
 
-    // Eliminar un producto
+    // Eliminar
     public function destroy($code)
     {
         $product = Product::where('code', $code)->first();

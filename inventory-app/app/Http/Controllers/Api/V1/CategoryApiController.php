@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class CategoryApiController extends Controller
 {
-    // Mostrar todas las categorías con paginación
+    // Mostrar todas las categorías
     public function index()
     {
         $categories = Category::paginate();
         return response()->json($categories);
     }
 
-    // Crear una nueva categoría
+    // Crear una categoría
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -26,7 +26,7 @@ class CategoryApiController extends Controller
         return response()->json($category, 201);
     }
 
-    // Actualizar una categoría existente
+    // Actualizar una categoría
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
@@ -38,7 +38,7 @@ class CategoryApiController extends Controller
         return response()->json($category);
     }
 
-    // Eliminar una categoría
+    // Eliminar categoría
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
