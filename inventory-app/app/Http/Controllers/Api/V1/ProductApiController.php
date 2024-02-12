@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class ProductApiController extends Controller
 {
-    // Mostrar todos los productos
+    // Mostrar Productos
     public function index()
     {
         $products = Product::with(['category', 'location'])->paginate();
         return response()->json($products);
     }
 
-    // Mostrar producto por código
+    // Mostrar por código
     public function show($code)
     {
         $product = Product::with(['category', 'location'])->where('code', $code)->first();
@@ -28,7 +28,6 @@ class ProductApiController extends Controller
     }
 
     // Mostrar por categoría
-
     public function byCategory($category)
     {
         $products = Product::with(['category', 'location'])->whereHas('category', function ($query) use ($category) {
@@ -38,29 +37,25 @@ class ProductApiController extends Controller
         return response()->json($products);
     }
 
-    // Crear producto
+    // Crear Producto
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'code' => 'required|string|unique:products,code|max:255',
-            'name' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'manufacturer' => 'required|string|max:255',
+            'description' => 'required|string',
+            'stock' => 'required|integer',
+            'status' => 'required|string',
+            'location_id' => 'required|exists:locations,id',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $product = Product::create($validatedData);
         return response()->json($product, 201);
     }
 
-    // Actualizar producto
-    public function update(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
-        return response()->json($product);
-    }
-
-    // Eliminar
+    // Eliminar Producto
     public function destroy($code)
     {
         $product = Product::where('code', $code)->first();
@@ -70,6 +65,6 @@ class ProductApiController extends Controller
         }
 
         $product->delete();
-        return response()->json(['message' => 'Producto eliminado'], 204);
+        return response()->json(['message' => 'Producto eliminado'], 200);
     }
 }
