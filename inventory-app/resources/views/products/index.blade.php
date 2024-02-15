@@ -64,13 +64,13 @@
                                     <td class="py-4 px-6">{{ $product->location->city ?? 'N/A' }}</td>
                                     <td class="py-4 px-6 flex justify-center items-center space-x-2">
                                         <a href="{{ route('products.edit', $product) }}" class="text-blue-500 hover:text-blue-700">
-                                            <i class="fas fa-edit fa-lg"></i> <!-- Aumentar tamaño -->
+                                            <i class="fas fa-edit fa-lg"></i>
                                         </a>
                                         <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('¿Estás seguro de querer eliminar este producto?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:text-red-700">
-                                                <i class="fas fa-trash-alt fa-lg"></i> <!-- Aumentar tamaño -->
+                                                <i class="fas fa-trash-alt fa-lg"></i>
                                             </button>
                                         </form>
                                     </td>
